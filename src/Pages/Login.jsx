@@ -38,9 +38,6 @@ export default function Login() {
     // Toggle phone number visibility
     const handlePhoneToggle = () => {
         setShowPhone(prev => !prev);
-        if (!showPhone) {
-            setFormData(prev => ({ ...prev, phone: '' }));
-        }
     };
 
     // Validate form
@@ -128,7 +125,7 @@ export default function Login() {
 
                 if (response.status === 200) {
                     setShowSuccess(true);
-                    setTimeout(() => setShowSuccess(false), 5000); // Hide success message after 5 seconds
+                    setTimeout(() => setShowSuccess(false), 5000);
                 } else {
                     alert('Form submission failed. Please try again.');
                 }
@@ -200,17 +197,16 @@ export default function Login() {
                         <label htmlFor="phoneToggle" className="mr-3 font-medium">
                             Phone Number
                         </label>
-                        <div className="relative inline-block w-12 h-6 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                id="phoneToggle"
-                                className="hidden"
-                                checked={showPhone}
-                                onChange={handlePhoneToggle}
+                        <button
+                            type="button"
+                            id="phoneToggle"
+                            className={`relative inline-flex items-center h-6 rounded-full w-12 transition-colors focus:outline-none ${showPhone ? 'bg-blue-500' : 'bg-gray-300'}`}
+                            onClick={handlePhoneToggle}
+                        >
+                            <span
+                                className={`inline-block w-4 h-4 transform transition-transform bg-white rounded-full ${showPhone ? 'translate-x-7' : 'translate-x-1'}`}
                             />
-                            <div className={`block w-12 h-6 rounded-full transition-colors ${showPhone ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
-                            <div className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${showPhone ? 'transform translate-x-6' : ''}`}></div>
-                        </div>
+                        </button>
                         <span className="ml-2 text-sm text-gray-500">
                             {showPhone ? 'Yes' : 'No'}
                         </span>
@@ -318,8 +314,8 @@ export default function Login() {
                             onClick={handleSubmit}
                             disabled={!isFormValid || isSubmitting}
                             className={`w-full py-2 px-6 text-white font-medium rounded-md transition-colors ${isFormValid && !isSubmitting
-                                    ? 'bg-blue-600 hover:bg-blue-700'
-                                    : 'bg-gray-400 cursor-not-allowed'
+                                ? 'bg-blue-600 hover:bg-blue-700'
+                                : 'bg-gray-400 cursor-not-allowed'
                                 }`}
                         >
                             {isSubmitting ? 'Submitting...' : 'Save'}
